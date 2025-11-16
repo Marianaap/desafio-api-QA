@@ -65,6 +65,7 @@ describe('CRUD de produtos', () => {
             expect(res.body.produtos).to.be.an('array')
 
             res.body.produtos.forEach((produto) => {
+               expect(produto._id).to.be.a('string')
                expect(produto.nome).to.be.a('string')
                expect(produto.preco).to.be.a('number')
                expect(produto.descricao).to.be.a('string')
