@@ -23,6 +23,5 @@ describe('CRUD de usuários', () => {
             expect(res.body.email).to.be.eq(user.email)
          })
       })
-
    })
 })
