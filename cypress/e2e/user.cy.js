@@ -7,9 +7,7 @@ describe('CRUD de usuários', () => {
          url: "/usuarios",
       }).then((res) => {
          expect(res.status).to.eq(200)
-         expect(res.body).to.have.property('quantidade')
          expect(res.body.quantidade).to.be.a('number')
-         expect(res.body).to.have.property('usuarios')
          expect(res.body.usuarios).to.be.an('array')
       })
    })
