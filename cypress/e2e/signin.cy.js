@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Login', () => {
+describe('Login de usuário', () => {
    it('Deve fazer o login com sucesso ao usar um usuário cadastrado', () => {
       cy.fixture('baseUser').then((user) => {
          cy.request({
