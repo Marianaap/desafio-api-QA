@@ -2,8 +2,6 @@
 
 const { faker } = require("@faker-js/faker")
 
-let cartCreated = false;
-
 describe('CRUD de carrinhos de compra', () => {
    describe("Com autenticação de admin", () => {
       beforeEach(() => {
@@ -52,23 +50,33 @@ describe('CRUD de carrinhos de compra', () => {
                expect(res.status).to.eq(201)
                expect(res.body).to.have.property("message", "Cadastro realizado com sucesso")
                expect(res.body._id).to.be.a('string')
-               cartCreated = true;
             })
          })
       })
 
       it('Deve remover/cancelar um carrinho de compra', () => {
-         if (cartCreated) {
-            cy.authRequest({
-               method: "DELETE",
-               url: "/carrinhos/cancelar-compra",
+         cy.fixture('adminUser').then((user) => {
+            cy.request({
+               method: "GET",
+               url: "/carrinhos",
+               qs: {
+                  idUsuario: user._id
+               }
             }).then((res) => {
                expect(res.status).to.eq(200)
-               expect(res.body).to.have.property("message", "Registro excluído com sucesso. Estoque dos produtos reabastecido")
+               if (res.body.quantidade) {
+                  cy.authRequest({
+                     method: "DELETE",
+                     url: "/carrinhos/cancelar-compra",
+                  }).then((res) => {
+                     expect(res.status).to.eq(200)
+                     expect(res.body).to.have.property("message", "Registro excluído com sucesso. Estoque dos produtos reabastecido")
+                  })
+               } else {
+                  cy.log("Nenhum carrinho de compra associado ao usuário!")
+               }
             })
-         } else {
-            cy.log("Nenhum carrinho de compra criado!")
-         }
+         })
       })
    })
 

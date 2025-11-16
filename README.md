@@ -51,3 +51,6 @@ Modo interativo (Dashboard do Cypress)
 - Cenário 2 - Cancelar um carrinho criado (admin logado): Testa se o administrador consegue excluir um carrinho e devolver os itens ao estoque.
 
 - Cenário 3 - Listar carrinhos cadastrados (sem login): Testa se qualquer pessoa consegue ver a lista de carrinhos existentes no sistema.
+
+## Observação importante!
+Por conta da base de dados do ServeRest ter um ciclo de limpeza de dados regular, é necessário inserir alguns usuários conhecidos (fixture) na base da API para que todos os testes possam ser executados. Para isso, é necessário atualizar o arquivo ```cypress\e2e\setup.cy.js```, removendo o ".skip" da linha 4 e rodando o cenário apenas a primeira vez.

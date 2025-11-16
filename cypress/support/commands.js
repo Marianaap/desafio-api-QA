@@ -17,8 +17,6 @@ Cypress.Commands.add('login', (email, password) => {
       cy.window().then((win) => {
          win.localStorage.setItem("token", token)
       })
-
-      return cy.wrap(token);
    })
 })
 
