@@ -1,0 +1,25 @@
+{
+  "name": "desafio-api-qa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marianaap/desafio-api-QA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Marianaap/desafio-api-QA/issues"
+  },
+  "homepage": "https://github.com/Marianaap/desafio-api-QA#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "cypress": "^15.6.0"
+  }
+}
