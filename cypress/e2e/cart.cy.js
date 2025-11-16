@@ -2,6 +2,8 @@
 
 const { faker } = require("@faker-js/faker")
 
+let cartCreated = false;
+
 describe('CRUD de carrinhos de compra', () => {
    describe("Com autenticação de admin", () => {
       beforeEach(() => {
@@ -23,19 +25,21 @@ describe('CRUD de carrinhos de compra', () => {
             expect(res.body.quantidade).to.be.a('number')
             expect(res.body.produtos).to.be.an('array')
 
-            res.body.produtos.slice(0, 2).forEach((produto) => {
+            res.body.produtos.forEach((produto) => {
                expect(produto._id).to.be.a('string')
                expect(produto.nome).to.be.a('string')
                expect(produto.preco).to.be.a('number')
                expect(produto.descricao).to.be.a('string')
                expect(produto.quantidade).to.be.a('number')
 
-               const cartProduct = {
-                  idProduto: produto._id,
-                  quantidade: faker.number.int({ min: 1, max: produto.quantidade })
-               }
+               if (!!produto.quantidade && cartProducts.length < 2) {
+                  const cartProduct = {
+                     idProduto: produto._id,
+                     quantidade: faker.number.int({ min: 1, max: produto.quantidade })
+                  }
 
-               cartProducts.push(cartProduct)
+                  cartProducts.push(cartProduct)
+               }
             })
 
             cy.authRequest({
@@ -48,9 +52,23 @@ describe('CRUD de carrinhos de compra', () => {
                expect(res.status).to.eq(201)
                expect(res.body).to.have.property("message", "Cadastro realizado com sucesso")
                expect(res.body._id).to.be.a('string')
+               cartCreated = true;
             })
-
          })
+      })
+
+      it('Deve remover/cancelar um carrinho de compra', () => {
+         if (cartCreated) {
+            cy.authRequest({
+               method: "DELETE",
+               url: "/carrinhos/cancelar-compra",
+            }).then((res) => {
+               expect(res.status).to.eq(200)
+               expect(res.body).to.have.property("message", "Registro excluído com sucesso. Estoque dos produtos reabastecido")
+            })
+         } else {
+            cy.log("Nenhum carrinho de compra criado!")
+         }
       })
    })
 

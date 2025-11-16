@@ -12,7 +12,7 @@ describe('CRUD de usuários', () => {
       })
    })
 
-   it('Deve buscar os dados de um usuários cadastrados pelo id', () => {
+   it('Deve buscar os dados de um usuário cadastrado', () => {
       cy.fixture('baseUser').then((user) => {
          cy.request({
             method: "GET",
